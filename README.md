@@ -1,73 +1,50 @@
-# React + TypeScript + Vite
+# 文档排版工具
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+支持 **公文**、**论文/课设**、**商业文档** 三大方向的在线排版工具。上传 .docx 文件，按行业标准自动排版或逐项自定义，一键导出规范格式的 Word 文档。
 
-Currently, two official plugins are available:
+## 功能特性
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 三种预设排版模板（公文 GB/T 9704、高校论文、商业文档）
+- 标题 + 四级标题 + 正文的字体、字号、对齐、加粗、行距、段间距逐项可配
+- 论文方向支持交叉引用：[数字] 标注 + 参考文献列表
+- 上传 .docx 自动解析段落并智能识别各级标题
+- 点击预览段落可切换标题级别（标题 ← 一级 ← 二级 ← 三级 ← 四级 ← 正文）
+- 行距支持多倍行距 & 固定值（pt），段前/段后距可调
 
-## React Compiler
+## 下载与打开
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 方法一：浏览器在线使用（推荐）
 
-## Expanding the ESLint configuration
+项目已部署后，直接在浏览器打开网页即可使用。无需安装任何软件。
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 方法二：本地运行
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+# 1. 克隆仓库
+git clone https://github.com/ZOPICLONE1/doc-formatter.git
+cd doc-formatter
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# 2. 安装依赖（需要 Node.js ≥18）
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 3. 启动开发服务器
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+浏览器访问 `http://localhost:5173/` 即可使用。
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 方法三：构建后使用
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run build
 ```
+
+构建产物在 `dist/` 目录，可直接部署到任意静态服务器（Nginx、GitHub Pages 等）。
+
+## 技术栈
+
+- React 19 + TypeScript
+- Vite
+- mammoth.js（.docx 解析）
+- docx（.docx 生成）
